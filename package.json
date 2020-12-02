@@ -3,18 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "autoprefixer": "^9",
+    "postcss-cli": "^8.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0",
     "react-scripts": "4.0.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "tailwind:build": "cross-env NODE_ENV=production postcss src/tailwind.dev.css -o src/index.css",
+    "tailwind:dev": "postcss src/tailwind.dev.css -o src/index.css",
+    "prestart": "npm run tailwind:dev",
+    "prebuild": "npm run tailwind:build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
