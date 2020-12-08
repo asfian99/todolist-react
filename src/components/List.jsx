@@ -1,6 +1,6 @@
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
-const List = ({ items, removeTodo }) => {
+const List = ({ items, removeTodo, editTodo }) => {
   return (
     <div className="grid grid-cols-1 text-gray-800">
       {items.map((item) => {
@@ -12,7 +12,10 @@ const List = ({ items, removeTodo }) => {
           >
             <p className="font-medium text-lg">{title}</p>
             <div>
-              <button className="mx-1 text-xl text-green-500 hover:text-green-700">
+              <button
+                className="mx-1 text-xl text-green-500 hover:text-green-700"
+                onClick={() => editTodo(id)}
+              >
                 <AiOutlineEdit />
               </button>
               <button

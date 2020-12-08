@@ -20,6 +20,18 @@ function App() {
       showAlert(true, "The Form is Empty", "danger");
     } else if (name && isEditing) {
       // edit todo
+      setList(
+        list.map((todo) => {
+          if (todo.id === editID) {
+            return { ...todo, title: name };
+          }
+          return todo;
+        })
+      );
+      setName("");
+      setEditID(null);
+      setIsEditing(false);
+      showAlert(true, "Todo edited succesfully", "success");
     } else {
       // new todo
       showAlert(true, "Todo has been added successfully", "success");
@@ -40,6 +52,12 @@ function App() {
     showAlert(true, "Todo deleted", "danger");
     setList(list.filter((todo) => todo.id !== id));
   };
+  const editTodo = (id) => {
+    const selectedTodo = list.find((todo) => todo.id === id);
+    setIsEditing(true);
+    setEditID(id);
+    setName(selectedTodo.title);
+  };
 
   return (
     <section className="flex h-screen bg-gray-200 text-gray-800">
@@ -59,7 +77,11 @@ function App() {
             />
             <button
               type="submit"
-              className="py-2 px-4 mx-1 flex-none border-2 border-indigo-500 bg-indigo-500 hover:bg-indigo-700 text-white rounded transition duration-200"
+              className={`py-2 px-4 mx-1 flex-none border-2 text-white rounded transition duration-200 ${
+                isEditing
+                  ? "border-green-500 bg-green-500 hover:bg-green-700"
+                  : "border-indigo-500 bg-indigo-500 hover:bg-indigo-700"
+              }`}
               autoFocus
             >
               {isEditing ? "Edit" : "Add"}
@@ -72,7 +94,7 @@ function App() {
 
         {list.length > 0 && (
           <div>
-            <List items={list} removeTodo={removeTodo} />
+            <List items={list} removeTodo={removeTodo} editTodo={editTodo} />
             <button
               className="py-2 mt-4 ml-auto w-1/2 bg-red-500 hover:bg-red-700 text-white font-medium tracking-wider rounded transition duration-200"
               onClick={clearList}
